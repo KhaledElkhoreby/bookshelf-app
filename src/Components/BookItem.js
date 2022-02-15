@@ -12,7 +12,7 @@ const BookItem = (props) => {
             backgroundImage: `url(${props.book.imageLinks.thumbnail})`,
           }}
         ></div>
-        <BookshelfChanger />
+        <BookshelfChanger book={props.book} />
       </div>
       <div className="book-title">{props.book.title}</div>
       <div className="book-authors">{props.book.authors.join(" ")}</div>

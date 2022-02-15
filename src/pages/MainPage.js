@@ -1,13 +1,17 @@
+import { useContext } from "react";
 import { useHistory } from "react-router-dom";
+import BookContext from "../store/bookContext";
 import Bookshelf from "./../Components/Bookshelf";
 
-const MainPage = (props) => {
-  const currentlyReading = props.books.filter(
+const MainPage = () => {
+  const bookCtx = useContext(BookContext);
+  const currentlyReading = bookCtx.books.filter(
     (book) => book.shelf === "currentlyReading"
   );
-  const wantToRead = props.books.filter((book) => book.shelf === "wantToRead");
-  const read = props.books.filter((book) => book.shelf === "read");
-
+  const wantToRead = bookCtx.books.filter(
+    (book) => book.shelf === "wantToRead"
+  );
+  const read = bookCtx.books.filter((book) => book.shelf === "read");
   const history = useHistory();
   const openSearchHandler = () => {
     history.push("/search");
