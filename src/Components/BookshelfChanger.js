@@ -1,15 +1,18 @@
 import { useContext } from "react";
 import BookContext from "../store/bookContext";
 
-const BookshelfChanger = ({ book }) => {
+const BookshelfChanger = (props) => {
   const bookCtx = useContext(BookContext);
   const onChangeValueHandler = (event) => {
     const selectedShelf = event.target.value;
-    bookCtx.changeShelfHandler(book, selectedShelf);
+    bookCtx.changeShelfHandler(props.book, selectedShelf);
   };
   return (
     <div className="book-shelf-changer">
-      <select onChange={onChangeValueHandler} defaultValue={book.shelf}>
+      <select
+        onChange={onChangeValueHandler}
+        defaultValue={props.shelf || props.book.ourShelf}
+      >
         <option value="move" disabled>
           Move to...
         </option>

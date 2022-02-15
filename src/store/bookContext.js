@@ -13,7 +13,6 @@ export const BookContextProvider = (props) => {
   useEffect(() => {
     BooksAPI.getAll().then((books) => {
       setBooks(books);
-      console.log(books);
     });
   }, []);
 
