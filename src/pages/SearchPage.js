@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import SearchResults from "../Components/SearchResults";
 import * as BooksAPI from "../BooksAPI";
 import shelfContext from "../store/shelfContext";
+import NoResults from "../UI/NoResults";
+import Loading from "../UI/Loading";
 
 const SearchPage = () => {
   /* ALTERNATIVE FOR Link
@@ -12,6 +14,8 @@ const SearchPage = () => {
   }; */
   const [resultedBooks, setResultedBooks] = useState([]);
   const [query, setQuery] = useState("");
+  const [searching, setSearching] = useState(false);
+
   const onChangeHandler = (event) => {
     setQuery(event.target.value);
   };
@@ -41,22 +45,27 @@ const SearchPage = () => {
       }
     };
     const identifer = setTimeout(() => {
-      BooksAPI.search(query)
-        .then((books) => {
-          if (books) {
-            return books;
-          } else {
-            throw Error("There are no books");
-          }
-        })
-        .then((books) => {
-          if (books)
-            setResultedBooks(books.map((book) => checkIsInOurShelf(book)));
-        })
-        .catch((error) => {
-          setResultedBooks({ error: "empty query" });
-          console.log(error);
-        });
+      if (query) {
+        setSearching(true);
+        BooksAPI.search(query)
+          .then((books) => {
+            if (books.length > 0) {
+              return books;
+            } else {
+              setSearching(false);
+              throw Error("There are no books");
+            }
+          })
+          .then((books) => {
+            if (books)
+              setResultedBooks(books.map((book) => checkIsInOurShelf(book)));
+          })
+          .catch((error) => {
+            setSearching(false);
+            setResultedBooks({ error: "empty query" });
+            console.log(error);
+          });
+      }
     }, 500);
 
     return () => {
@@ -83,7 +92,13 @@ const SearchPage = () => {
         </div>
       </div>
       {query &&
-        (resultedBooks.error === "empty query" ? null : (
+        (resultedBooks.error === "empty query" ? (
+          !searching ? (
+            <NoResults>{query}</NoResults>
+          ) : (
+            <Loading />
+          )
+        ) : (
           <SearchResults books={resultedBooks} />
         ))}
     </div>
