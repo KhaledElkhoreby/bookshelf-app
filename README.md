@@ -1,6 +1,6 @@
 # MyReads: A Book Lending App
 
-## App preview
+## App Preview
 
 ![Bookshelf Preview](./chrome-capture-min.gif)
 
