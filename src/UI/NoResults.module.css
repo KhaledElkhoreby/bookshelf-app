@@ -1,11 +1,13 @@
 .noResults {
-  position: absolute;
-  transform: translateX(-50%);
-  left: 50%;
-  top: 10%;
+  margin: 3rem auto 1rem;
   text-align: center;
-  padding: 0 1em;
+  padding: 0 2em;
   border: 1px solid #c9201a;
   border-radius: 0.25em;
-  width: 80%;
+  max-width: 80%;
+  max-width: 45rem;
+}
+
+.noResults strong {
+  color: #c9201a;
 }
