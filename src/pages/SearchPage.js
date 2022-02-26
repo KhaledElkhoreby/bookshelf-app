@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import SearchResults from "../Components/SearchResults";
 import * as BooksAPI from "../BooksAPI";
@@ -11,6 +11,7 @@ const SearchPage = () => {
   const [resultedBooks, setResultedBooks] = useState([]);
   const [query, setQuery] = useState("");
   const [notFound, setNotFound] = useState(false);
+  const inputRef = useRef();
 
   const onChangeHandler = (event) => {
     setQuery(event.target.value);
@@ -44,6 +45,7 @@ const SearchPage = () => {
   );
 
   useEffect(() => {
+    inputRef.current.focus();
     const identifer = setTimeout(async () => {
       if (query) {
         try {
@@ -80,6 +82,7 @@ const SearchPage = () => {
             type="text"
             placeholder="Search by title or author"
             onChange={onChangeHandler}
+            ref={inputRef}
           />
         </div>
       </div>
