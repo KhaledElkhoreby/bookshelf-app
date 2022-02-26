@@ -124,7 +124,7 @@ body,
   /* top: 20px;
   left: 15px; */
   width: 50px;
-  height: 53px;
+  height: 100%;
   color: var(--fontMainColor);
   background-color: var(--btnColor);
   background-image: url("./icons/arrow-back.svg");
